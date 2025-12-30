@@ -1,0 +1,39 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+clear
+echo -e "${CYAN}=========================================${NC}"
+echo -e "${CYAN} DDs&kati free — Beta Setup${NC}"
+echo -e "${CYAN}=========================================${NC}"
+echo
+
+PKG="package:com.ddsnkati.free"
+
+echo -e "${YELLOW}[1/5] Storage access${NC}"
+termux-setup-storage
+
+echo -e "${YELLOW}[2/5] Overlay permission${NC}"
+read -p "ENTER → "
+am start -a android.settings.MANAGE_OVERLAY_PERMISSION -d $PKG
+
+echo -e "${YELLOW}[3/5] Battery optimization OFF${NC}"
+read -p "ENTER → "
+am start -a android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS
+
+echo -e "${YELLOW}[4/5] App settings${NC}"
+read -p "ENTER → "
+am start -a android.settings.APPLICATION_DETAILS_SETTINGS -d $PKG
+
+echo -e "${YELLOW}[5/5] Installing requirements${NC}"
+pkg install clang -y
+apt autoremove --purge -y
+apt clean
+
+echo
+echo -e "${GREEN}✔ Beta setup completed successfully${NC}"
+echo -e "${CYAN}=========================================${NC}"
